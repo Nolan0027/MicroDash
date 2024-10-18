@@ -1,12 +1,28 @@
+input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
+    if (A == 2) {
+        B = Spike.get(LedSpriteProperty.X)
+        basic.pause(600)
+        if (Spike.get(LedSpriteProperty.X) == B) {
+            Spike.delete()
+            basic.clearScreen()
+            StartLvl(LvlSelector)
+        }
+    }
+})
 input.onButtonPressed(Button.A, function () {
     if (A == 1) {
         LvlSelector += -1
         basic.showNumber(LvlSelector)
+    } else if (A == 0) {
+        basic.showNumber(LvlSelector)
+        A = 1
     } else {
         Player.set(LedSpriteProperty.Y, 2)
-        basic.pause(220)
+        basic.pause(350)
         Player.set(LedSpriteProperty.Y, 1)
-        basic.pause(300)
+        basic.pause(500)
+        Player.set(LedSpriteProperty.Y, 2)
+        basic.pause(350)
         Player.set(LedSpriteProperty.Y, 3)
     }
 })
@@ -34,15 +50,17 @@ function StartLvl (Number2: number) {
     G5 = game.createSprite(4, 4)
     A = 2
     if (Number2 == 1) {
-        for (let index = 0; index < 4; index++) {
-            for (let index = 0; index < 12; index++) {
-                Spike.move(-1)
-                if (Player.isTouching(Spike)) {
-                    control.reset()
+        for (let index = 0; index < 5; index++) {
+            for (let index = 0; index < 4; index++) {
+                for (let index = 0; index < 4; index++) {
+                    Spike.move(-1)
+                    if (Player.isTouching(Spike)) {
+                        control.reset()
+                    }
+                    basic.pause(450)
                 }
-                basic.pause(500)
+                Spike.set(LedSpriteProperty.X, 4)
             }
-            Spike.set(LedSpriteProperty.X, 4)
             for (let index = 0; index < 8; index++) {
                 Spike2 = game.createSprite(3, 3)
                 Spike2.move(-1)
@@ -50,7 +68,7 @@ function StartLvl (Number2: number) {
                 if (Player.isTouching(Spike) || Player.isTouching(Spike2)) {
                     control.reset()
                 }
-                basic.pause(500)
+                basic.pause(300)
             }
             Spike2.delete()
             Spike.set(LedSpriteProperty.X, 4)
@@ -63,11 +81,13 @@ let G4: game.LedSprite = null
 let G3: game.LedSprite = null
 let G2: game.LedSprite = null
 let G1: game.LedSprite = null
-let Spike: game.LedSprite = null
 let Player: game.LedSprite = null
+let Spike: game.LedSprite = null
 let LvlSelector = 0
+let B = 0
 let A = 0
-A = 1
+A = 0
+B = 0
 LvlSelector = 2
 basic.showLeds(`
     # # # . .
