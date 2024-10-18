@@ -16,6 +16,8 @@ input.onButtonPressed(Button.A, function () {
     } else if (A == 0) {
         basic.showNumber(LvlSelector)
         A = 1
+    } else if (A == 3) {
+        Player.move(-1)
     } else {
         Player.set(LedSpriteProperty.Y, 2)
         basic.pause(350)
@@ -29,12 +31,22 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.AB, function () {
     if (A == 1) {
         StartLvl(LvlSelector)
+    } else if (A == 3) {
+        Player.set(LedSpriteProperty.Y, 2)
+        basic.pause(350)
+        Player.set(LedSpriteProperty.Y, 1)
+        basic.pause(500)
+        Player.set(LedSpriteProperty.Y, 2)
+        basic.pause(350)
+        Player.set(LedSpriteProperty.Y, 3)
     }
 })
 input.onButtonPressed(Button.B, function () {
     if (A == 1) {
         LvlSelector += 1
         basic.showNumber(LvlSelector)
+    } else if (A == 3) {
+        Player.move(1)
     }
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
@@ -54,9 +66,6 @@ function StartLvl (Number2: number) {
             for (let index = 0; index < 4; index++) {
                 for (let index = 0; index < 4; index++) {
                     Spike.move(-1)
-                    if (Player.isTouching(Spike)) {
-                        control.reset()
-                    }
                     basic.pause(450)
                 }
                 Spike.set(LedSpriteProperty.X, 4)
@@ -65,14 +74,13 @@ function StartLvl (Number2: number) {
                 Spike2 = game.createSprite(3, 3)
                 Spike2.move(-1)
                 Spike.move(-1)
-                if (Player.isTouching(Spike) || Player.isTouching(Spike2)) {
-                    control.reset()
-                }
-                basic.pause(300)
             }
             Spike2.delete()
             Spike.set(LedSpriteProperty.X, 4)
         }
+    } else if (Number2 == 2) {
+        A = 3
+        Spike.set(LedSpriteProperty.X, 3)
     }
 }
 let Spike2: game.LedSprite = null
@@ -88,7 +96,7 @@ let B = 0
 let A = 0
 A = 0
 B = 0
-LvlSelector = 2
+LvlSelector = 1
 basic.showLeds(`
     # # # . .
     # # # # .
@@ -96,3 +104,12 @@ basic.showLeds(`
     # # # # .
     # # # . .
     `)
+basic.forever(function () {
+    if (A == 2 || A == 3) {
+        if (Player.isTouching(Spike)) {
+            Spike.delete()
+            Player.delete()
+            StartLvl(LvlSelector)
+        }
+    }
+})
