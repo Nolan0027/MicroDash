@@ -1,5 +1,6 @@
 {
     "name": "MicroDash 1.1",
+    "version": "1.0.0",
     "description": "",
     "dependencies": {
         "core": "*",
