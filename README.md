@@ -1,6 +1,8 @@
 
 > Open this page at [https://nolan0027.github.io/microdash/](https://nolan0027.github.io/microdash/)
 
+1.2 link: https://makecode.microbit.org/S41312-12011-91902-85478
+
 ## Use as Extension
 
 This repository can be added as an **extension** in MakeCode.
